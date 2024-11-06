@@ -1,0 +1,2 @@
+# Example training input using curl: curl -X POST "http://localhost:8080/train" -H "Content-Type: application/json" -d '{"data": [{"Material_Name": "Material A", "Lead_Time": 5}]}'
+# Example prediction input using curl: curl -X POST "http://localhost:8080/train" -H "Content-Type: application/json" -d '{"data": [{"Material_Name": "Material A"}]}'
