@@ -1,0 +1,9 @@
+{
+  "name": "Flask App",
+  "dockerFile": "Dockerfile",
+  "forwardPorts": [8080],
+  "postCreateCommand": "pip install -r requirements.txt && python app.py",
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+  }
+}
