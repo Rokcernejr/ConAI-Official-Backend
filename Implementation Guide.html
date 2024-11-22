@@ -1,0 +1,72 @@
+#Implementation example for website
+
+
+
+
+
+#Parsing the Excel File
+<script>
+document.getElementById('upload').addEventListener('change', handleFile);
+
+function handleFile(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: 'array' });
+
+        // Assume the first sheet; modify as needed
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
+
+        // Convert sheet to JSON
+        const jsonData = XLSX.utils.sheet_to_json(worksheet);
+        processColumns(jsonData);
+    };
+
+    reader.readAsArrayBuffer(file);
+}
+
+function processColumns(jsonData) {
+    // Filter the desired columns
+    const desiredColumns = jsonData.map(row => ({
+        Column1: row['Column1'], // Replace 'Column1' with your column name
+        Column2: row['Column2']  // Replace 'Column2' with your column name
+    }));
+
+    // Output the JSON
+    const output = JSON.stringify(desiredColumns, null, 2);
+    document.getElementById('output').textContent = output;
+}
+</script>
+
+
+
+
+
+
+#Example Post Request
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send POST Request to Flask</title>
+</head>
+<body>
+    <h1>Submit Data to Flask App</h1>
+    <form action="/submit" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
+
