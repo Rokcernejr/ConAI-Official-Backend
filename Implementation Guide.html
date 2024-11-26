@@ -5,7 +5,7 @@
 
 
 #Parsing the Excel File
-<script>
+
 document.getElementById('upload').addEventListener('change', handleFile);
 
 function handleFile(event) {
@@ -19,7 +19,7 @@ function handleFile(event) {
 
         // Assume the first sheet; modify as needed
         const sheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[sheetName];
+        const worksheet = workbook.Sheets[Sheet1];
 
         // Convert sheet to JSON
         const jsonData = XLSX.utils.sheet_to_json(worksheet);
@@ -32,15 +32,15 @@ function handleFile(event) {
 function processColumns(jsonData) {
     // Filter the desired columns
     const desiredColumns = jsonData.map(row => ({
-        Column1: row['Column1'], // Replace 'Column1' with your column name
-        Column2: row['Column2']  // Replace 'Column2' with your column name
+        Column1: row['Material_Name'],
+        Column2: row['Lead_Time']
     }));
 
     // Output the JSON
     const output = JSON.stringify(desiredColumns, null, 2);
     document.getElementById('output').textContent = output;
 }
-</script>
+
 
 
 
@@ -60,10 +60,9 @@ function processColumns(jsonData) {
     <h1>Submit Data to Flask App</h1>
     <form action="/submit" method="POST">
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
+        <input type="file" id="output" name="output" required>
         
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
+
         
         <button type="submit">Submit</button>
     </form>
